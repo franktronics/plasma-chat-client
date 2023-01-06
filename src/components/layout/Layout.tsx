@@ -1,5 +1,8 @@
+import { BaseStyle } from "src/style/BaseStyle"
 
 export const Layout = () => {
 
-    return <div>layout</div>
+    return <BaseStyle>
+        <span>base style</span>
+    </BaseStyle>
 }
