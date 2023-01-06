@@ -1,15 +1,6 @@
-/*ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)*/
+import { PlasmaChat } from "./utils/PlasmaCustomElement"
 
 export const plasmaChat = () => {
-  return 'Hello world !'
+  customElements.define("plasma-chat", PlasmaChat)
 }
-export const testJsx = () => {
-
-  return <div>
-    ok^
-  </div>
-}
+plasmaChat()
