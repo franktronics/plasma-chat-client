@@ -5,7 +5,14 @@ import { FunctionComponent, PropsWithChildren } from "react"
 export const Reset = styled.div(
     css`
         font-size: 16px;
-        color: #f00;
+        --pl-primary: #005DE9;
+        --pl-secondary: #FF715B;
+        --pl-black: #2E3532;
+        --pl-white: #FFFFFF;
+        --pl-chatbtn-radius: 60px;
+        --pl-chatbtn-position: auto 16px 16px auto;
+        --pl-cubic-1: ease-in-out;
+
         *, *::before, *::after {
             padding: 0;
             margin: 0;
