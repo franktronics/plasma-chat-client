@@ -9,9 +9,14 @@ export const Reset = styled.div(
         --pl-secondary: #FF715B;
         --pl-black: #2E3532;
         --pl-white: #FFFFFF;
+        --pl-white-faded: rgba(255, 255, 255, 0.2);
         --pl-chatbtn-radius: 60px;
         --pl-chatbtn-position: auto 16px 16px auto;
         --pl-cubic-1: ease-in-out;
+        --pl-cubic-2: cubic-bezier(0.02, 0.59, 0.74, 0.66);
+        --pl-shadow-1: 0 4px 12px rgb(0 0 0 / 30%);
+        --pl-pos-x: 16px;
+        --pl-pos-y: 16px;
 
         *, *::before, *::after {
             padding: 0;
