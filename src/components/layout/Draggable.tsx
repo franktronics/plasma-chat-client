@@ -144,7 +144,7 @@ export const Draggable: FunctionComponent<PropsWithChildren<{handel: string, dra
         if(handelElt && dragElt){
             dragInstance.current.instance = new Drag(handelElt, dragElt, options)
         }else{
-            console.error("Can't find elements for plasma-card: #0001")
+            console.error("Can't find elements for plasma-card: pl-e-code#00001")
         }
 
         return () => {
