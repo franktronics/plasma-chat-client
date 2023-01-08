@@ -1,5 +1,6 @@
 import { css, keyframes } from "@emotion/react"
 import styled from "@emotion/styled"
+import { usePlasma } from "src/store/plasma.context"
 
 const load = keyframes`
     0%{
@@ -27,8 +28,8 @@ const BaseChatBtn = styled.button`
     box-shadow: var(--pl-shadow-1);
 
     position: fixed;
-    z-index: 99999;
     inset: var(--pl-chatbtn-position);
+    z-index: 99999;
 
     display: flex;
     justify-content: center;
@@ -76,7 +77,7 @@ const BtnSvg = (props: {color?: string, variant: "fill" | "stroke"}) => {
     }</>
 }
 
-const BtnDots = ({color = "white"}: {color?: string}) => {
+const BtnDots = () => {
 
     return <div 
         css={css`
@@ -106,8 +107,16 @@ const BtnDots = ({color = "white"}: {color?: string}) => {
 }
 
 export const ChatBtn = () => {
-    
-    return <BaseChatBtn>
+    const plasma = usePlasma()
+
+    return <BaseChatBtn
+        onClick={() => {
+            plasma.toggleChatOpen()
+        }}
+        css={css`
+            display: ${plasma.chatOpen? 'none': 'inline-block;'};
+        `}
+    >
         <div 
             css={css`
                 position: relative;

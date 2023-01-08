@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useRef, useState } from "react";
 import { PlasmaContextT } from "src/types/contextType/plasmaContextType";
 
 const PlasmaContextDefault: PlasmaContextT = {
@@ -13,6 +13,7 @@ export const usePlasma = () => {
 }
 
 export const PlasmaProvider = ({children}: {children: ReactNode}) => {
+
     const [chatOpen, setChatOpen] = useState<boolean>(false)
     const toggleChatOpen = (state?: boolean): void => {
         if(state){

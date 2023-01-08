@@ -1,6 +1,6 @@
 import { css } from "@emotion/react"
 import styled from "@emotion/styled"
-import { useEffect, useRef, useState } from "react"
+import { usePlasma } from "src/store/plasma.context"
 
 const hover = css`
     &::before{
@@ -55,45 +55,8 @@ const MenuBtn = () => {
 
 const DragZone = () => {
 
-    const [down, setDown] = useState<boolean>(false)
-    const drag = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        const card = document.getElementById("plasma-chat-card") as HTMLElement
-        function pointerDown (e: MouseEvent) {
-            e.preventDefault()
-            e.stopPropagation()
-            setDown(true)
-        }
-        function pointerUp (e: MouseEvent) {
-            e.preventDefault()
-            e.stopPropagation()
-            setDown(false)
-        }
-        function pointerMove (e: MouseEvent) {
-            e.preventDefault()
-            e.stopPropagation()
-            if(!down) return
-
-            const clientX = e.clientX
-            const clientY = e.clientY
-            const bounding = card?.getBoundingClientRect()
-
-            const x = document.body.offsetWidth - (clientX + (bounding.width - (clientX - bounding?.left)))
-        }
-        drag.current?.addEventListener('pointerdown', pointerDown)
-        drag.current?.addEventListener('pointerup', pointerUp)
-        drag.current?.addEventListener('pointermove', pointerMove)
-
-        return () => {
-            drag.current?.removeEventListener('pointerdown', pointerDown)
-            drag.current?.removeEventListener('pointerup', pointerUp)
-            drag.current?.removeEventListener('pointermove', pointerMove)
-        }
-    }, [])
-
     return <div
-        ref={drag}
+        id="plasma-card-drag-zone"
         css={css`
             width: 48px;
             height: 20px;
@@ -126,8 +89,12 @@ const DragZone = () => {
 }
 
 const CloseBtn = () => {
+    const plasma = usePlasma()
 
     return <div
+        onClick={() => {
+            plasma.toggleChatOpen(false)
+        }}
         css={css`
             width: 40px;
             height: 20px;
