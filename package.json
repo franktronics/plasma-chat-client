@@ -10,7 +10,7 @@
     "url": "https://github.com/franktronics/plasma-chat-client"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build && node esbuild.js && npm run type-build && node build-file.js",
     "type-build": "tsc --declaration --emitDeclarationOnly --jsx react-jsx --esModuleInterop --target es2020 -p tsconfig.json --noEmit false && tsc-alias",
     "preview": "vite preview",
