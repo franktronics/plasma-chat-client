@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 import { CardHead } from "./CardHead"
 import { Draggable } from "./Draggable"
 import { usePlasma } from "src/store/plasma.context"
+import { Breakpoint } from "src/utils/GlobalVar"
 
 const BaseChatCard = styled.div<{chatOpen: boolean}>`
     width: ${props => props.chatOpen? 'var(--pl-chatcard-width)': 'var(--pl-chatbtn-radius)'};
@@ -12,11 +13,12 @@ const BaseChatCard = styled.div<{chatOpen: boolean}>`
     border-radius: ${props => props.chatOpen? 'var(--pl-chatcard-radius)': '50%'};
     overflow: hidden;
 
-    @media(max-width: 480px){
+    @media(max-width: ${Breakpoint.sm}px){
         width: ${props => props.chatOpen? '100%': 'var(--pl-chatbtn-radius)'};
         height: ${props => props.chatOpen? '100%': 'var(--pl-chatbtn-radius)'};
-        inset: 0;
-        border-radius: 0;
+        border-radius: ${props => props.chatOpen? '0': '50%'};
+        inset: ${props => props.chatOpen? 'auto 0px 0px auto': 'var(--pl-chatbtn-position)'};
+        max-height: 100vh;
     }
 
     position: fixed;

@@ -1,5 +1,6 @@
 import { FunctionComponent, PropsWithChildren, useEffect, useRef } from "react"
 import { usePlasma } from "src/store/plasma.context"
+import { Breakpoint } from "src/utils/GlobalVar"
 
 type DragOptions = {
     contentZone: Array<number>
@@ -18,8 +19,6 @@ class Drag {
     private x: number
     private y: number
     private innitBoundingDrag: DOMRect
-    private innerWidth: number
-    private innerHeight: number
 
     constructor(handel: HTMLElement, drag: HTMLElement, options: DragOptions = defaultOptions){
         this.options = {...defaultOptions, ...options}
@@ -32,19 +31,23 @@ class Drag {
         this.y = 0
         this.innitBoundingDrag = drag.getBoundingClientRect()
 
-        this.innerWidth = window.innerWidth
-        this.innerHeight = window.innerHeight
-
         this.mousemove = this.mousemove.bind(this)
         this.mouseup = this.mouseup.bind(this)
         this.mousedown = this.mousedown.bind(this)
         this.resizeWindow = this.resizeWindow.bind(this)
 
-        handel.addEventListener('pointerdown', this.mousedown)
-        handel.addEventListener('pointerup', this.mouseup)
-        document.addEventListener('pointermove', this.mousemove)
+        if(window.innerWidth > Breakpoint.sm){
+            this.connectEvents()
+        }
         window.addEventListener('resize', this.resizeWindow)
     }
+
+    connectEvents(){
+        this.handel.addEventListener('pointerdown', this.mousedown)
+        this.handel.addEventListener('pointerup', this.mouseup)
+        document.addEventListener('pointermove', this.mousemove)
+    }
+
     private mousedown(e: MouseEvent){
         e.preventDefault()
         e.stopPropagation()
@@ -103,6 +106,12 @@ class Drag {
         if(this.prevX !== 0 && this.prevY !== 0){
             this.reset()
         }
+        if(window.innerWidth > Breakpoint.sm){ 
+            this.disconnectEvents()
+            this.connectEvents()
+        }else{
+            this.disconnectEvents()
+        }
     }
 
     reset(hard: boolean = true){
@@ -126,11 +135,13 @@ class Drag {
         this.drag.style.transform = `translate(0, 0)`
     }
 
-    disconnectEvents(){
+    disconnectEvents(hard: boolean = false){
         this.handel.removeEventListener('pointerdown', this.mousedown)
         this.handel.removeEventListener('pointerup', this.mouseup)
         document.removeEventListener('pointermove', this.mousemove)
-        window.removeEventListener('resize', this.resizeWindow)
+        if(hard){
+            window.removeEventListener('resize', this.resizeWindow)
+        }
     }
 }
 
@@ -148,7 +159,7 @@ export const Draggable: FunctionComponent<PropsWithChildren<{handel: string, dra
         }
 
         return () => {
-            dragInstance.current.instance?.disconnectEvents()
+            dragInstance.current.instance?.disconnectEvents(true)
         }
     }, [])
 

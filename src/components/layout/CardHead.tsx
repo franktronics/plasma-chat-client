@@ -1,6 +1,7 @@
 import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import { usePlasma } from "src/store/plasma.context"
+import { Breakpoint } from "src/utils/GlobalVar"
 
 const hover = css`
     &::before{
@@ -66,6 +67,10 @@ const DragZone = () => {
             will-change: width;
             position: relative;
             top: -5px;
+
+            @media(max-width: ${Breakpoint.sm}px){
+                display: none;
+            }
 
             &:hover span{
                 width: 40px;
